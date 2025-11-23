@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spineret - Web Design That Captures Customers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4363fb;
+      --primary-dark: #364ecb;
+      --primary-light: #5a7ffc;
+      --dark-bg: #0a0a0a;
+      --darker-bg: #050505;
+      --card-bg: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --accent: #00ff88;
+      --gradient: linear-gradient(135deg, #4363fb 0%, #1a1a2e 100%);
+      --glow: 0 0 20px rgba(67, 99, 251, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(67, 99, 251, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(67, 99, 251, 0.05) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      33% {
+        transform: translate(-20px, -20px) rotate(1deg);
+      }
+
+      66% {
+        transform: translate(20px, -10px) rotate(-1deg);
+      }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(67, 99, 251, 0.2);
+    }
+
+    nav.scrolled {
+      padding: 0.5rem 0;
+      background: rgba(5, 5, 5, 0.98);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: '🕷️';
+      font-size: 2rem;
+      -webkit-text-fill-color: initial;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      background: radial-gradient(ellipse at center, rgba(67, 99, 251, 0.1) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero-subtext {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      animation: fadeIn 1.5s ease 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .slogan {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--primary-color);
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: rgba(67, 99, 251, 0.1);
+      border-radius: 10px;
+      border-left: 4px solid var(--primary-color);
+      animation: fadeIn 1.5s ease 0.5s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeIn 1.5s ease 0.7s both;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: var(--glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 30px rgba(67, 99, 251, 0.7);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Spider Web Decoration */
+    .spider-web {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+
+    .spider-web::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 35%, var(--primary-color) 35%, var(--primary-color) 36%, transparent 36%, transparent 58%, var(--primary-color) 58%, var(--primary-color) 59%, transparent 59%);
+      animation: rotate 60s linear infinite;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .web-1 {
+      top: 10%;
+      right: 5%;
+    }
+
+    .web-2 {
+      bottom: 10%;
+      left: 5%;
+      animation-direction: reverse;
+    }
+
+    /* Section Styles */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 3rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Key Highlights */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .highlight-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid rgba(67, 99, 251, 0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .highlight-card.animate {
+      animation: slideInUp 0.6s ease forwards;
+    }
+
+    @keyframes slideInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .highlight-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-color);
+      box-shadow: 0 10px 30px rgba(67, 99, 251, 0.3);
+    }
+
+    .highlight-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .highlight-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-card p {
+      color: var(--text-secondary);
+    }
+
+    /* Services Preview */
+    .services-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(67, 99, 251, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(67, 99, 251, 0.3);
+    }
+
+    .service-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .price-tag {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .monthly-fee {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Why Choose Section */
+    .why-choose {
+      background: var(--darker-bg);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-top: 5rem;
+    }
+
+    .why-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .why-list li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .why-list li:hover {
+      transform: translateX(5px);
+      background: rgba(67, 99, 251, 0.1);
+    }
+
+    .why-list i {
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    /* Pricing Section */
+    .pricing-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 20px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient);
+    }
+
+    .pricing-card.premium {
+      border-color: var(--primary-color);
+      transform: scale(1.05);
+      box-shadow: 0 10px 40px rgba(67, 99, 251, 0.3);
+    }
+
+    .pricing-card.premium::after {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--accent);
+      color: var(--dark-bg);
+      padding: 0.3rem 3rem;
+      transform: rotate(45deg);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(67, 99, 251, 0.3);
+    }
+
+    .pricing-card.premium:hover {
+      transform: scale(1.05) translateY(-5px);
+    }
+
+    .plan-name {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .build-price {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .monthly-price {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .features-list li {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(67, 99, 251, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .features-list li i {
+      color: var(--accent);
+    }
+
+    /* FAQ Section */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(67, 99, 251, 0.2);
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: rgba(67, 99, 251, 0.1);
+    }
+
+    .faq-question.active {
+      background: rgba(67, 99, 251, 0.2);
+      color: var(--primary-color);
+    }
+
+    .faq-question h3 {
+      font-size: 1.1rem;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-question.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 1.5rem;
+    }
+
+    .faq-answer.active {
+      max-height: 300px;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    /* Contact Section */
+    .contact-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid rgba(67, 99, 251, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background: var(--darker-bg);
+      border: 1px solid rgba(67, 99, 251, 0.3);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 99, 251, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 30px rgba(67, 99, 251, 0.7);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--darker-bg);
+      padding: 3rem 2rem 1rem;
+      border-top: 1px solid rgba(67, 99, 251, 0.2);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      border-radius: 50%;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(67, 99, 251, 0.1);
+      color: var(--text-secondary);
+    }
+
+    .footer-bottom a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--dark-bg);
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-subtext {
+        font-size: 1.1rem;
+      }
+
+      .slogan {
+        font-size: 1.2rem;
+      }
+
+      .pricing-card.premium {
+        transform: scale(1);
+      }
+
+      .contact-container {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, .3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      background: var(--accent);
+      color: var(--dark-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .success-message.show {
+      display: block;
+      animation: fadeInUp 0.5s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="logo">Spineret</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="mobile-menu" id="mobileMenu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="spider-web web-1"></div>
+    <div class="spider-web web-2"></div>
+    <div class="hero-content">
+      <h1>Build Your Digital Web with Spineret</h1>
+      <p class="hero-subtext">Professional web design that transforms your business</p>
+      <div class="slogan">
+        "A spider's web captures flies. Our web design captures customers."
+      </div>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">
+          <i class="fas fa-rocket"></i> Start Your Website
+        </a>
+        <a href="#pricing" class="btn btn-secondary">
+          <i class="fas fa-tag"></i> View Pricing
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">About Spineret</h2>
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
+        Spineret specializes in creating powerful digital presences for small businesses.
+        We weave together modern design, cutting-edge technology, and strategic thinking
+        to build websites that don't just look good—they deliver results.
+      </p>
+      <div class="why-choose">
+        <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">Why Choose Spineret?</h3>
+        <ul class="why-list">
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>No coding required</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Clean, modern design</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Custom monthly updates</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Mobile-friendly</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Fast support</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Highlights -->
+  <section>
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="highlight-icon">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h3>Fast Delivery</h3>
+        <p>Your website built and launched in just 5-10 days</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">
+          <i class="fas fa-paint-brush"></i>
+        </div>
+        <h3>Modern Design</h3>
+        <p>Stunning, professional designs that impress your customers</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">
+          <i class="fas fa-headset"></i>
+        </div>
+        <h3>Monthly Support</h3>
+        <p>Continuous updates, maintenance, and support included</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-preview">
+      <div class="service-card">
+        <h3>Standard Package</h3>
+        <div class="price-tag">$399</div>
+        <div class="monthly-fee">+$100/month</div>
+        <p>Perfect for small businesses needing a professional online presence with essential features and monthly
+          support.</p>
+        <a href="#pricing" class="btn btn-secondary" style="margin-top: 1.5rem;">Learn More</a>
+      </div>
+      <div class="service-card">
+        <h3>Premium Package</h3>
+        <div class="price-tag">$599</div>
+        <div class="monthly-fee">+$200/month</div>
+        <p>Comprehensive solution with unlimited pages, advanced SEO, priority support, and extensive customization
+          options.</p>
+        <a href="#pricing" class="btn btn-primary" style="margin-top: 1.5rem;">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing">
+    <h2 class="section-title">Choose Your Plan</h2>
+    <div class="pricing-container">
+      <div class="pricing-card">
+        <h3 class="plan-name">Standard Package</h3>
+        <div class="build-price">$399</div>
+        <div class="monthly-price">$100/month</div>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> Basic pages</li>
+          <li><i class="fas fa-check"></i> Clean and modern design</li>
+          <li><i class="fas fa-check"></i> 1 customization per month</li>
+          <li><i class="fas fa-check"></i> Limited information</li>
+          <li><i class="fas fa-check"></i> Basic SEO</li>
+          <li><i class="fas fa-check"></i> Fast delivery</li>
+          <li><i class="fas fa-check"></i> Email support</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+      </div>
+      <div class="pricing-card premium">
+        <h3 class="plan-name">Premium Package</h3>
+        <div class="build-price">$599</div>
+        <div class="monthly-price">$200/month</div>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> Full website</li>
+          <li><i class="fas fa-check"></i> Best performance and quality</li>
+          <li><i class="fas fa-check"></i> 5 customizations per month</li>
+          <li><i class="fas fa-check"></i> Unlimited pages</li>
+          <li><i class="fas fa-check"></i> Unlimited information</li>
+          <li><i class="fas fa-check"></i> Advanced SEO</li>
+          <li><i class="fas fa-check"></i> Priority support</li>
+          <li><i class="fas fa-check"></i> Fastest delivery</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can I update my website after it launches?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, you get monthly customizations based on your plan. Standard includes 1 customization per month, while
+            Premium includes 5 customizations per month.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How long does it take to build a website?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Usually 5–10 days depending on your package. Premium packages get fastest delivery priority.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Do I need to know how to code?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>No, Spineret handles everything. We take care of all the technical aspects so you can focus on your
+            business.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What does the monthly fee cover?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Hosting, updates, fixes, security, and customizations. Everything needed to keep your website running
+            smoothly.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can I switch plans later?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, you can upgrade anytime. Contact our support team to adjust your plan.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Do you offer custom designs?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, especially with the Premium plan. We work closely with you to create a design that matches your brand
+            perfectly.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can you add new pages later?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes. Premium allows unlimited pages, while Standard has some limitations. New pages can be added through
+            your monthly customizations.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Is support included?</h3>
+          <i class="fas fa-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, support is included in both plans. Premium customers get priority support with faster response times.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-container">
+      <p style="text-align: center; margin-bottom: 2rem; color: var(--text-secondary);">
+        Tell us what you need, and we'll build your website.
+      </p>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="business">Business Name (Optional)</label>
+          <input type="text" id="business" name="business">
+        </div>
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">
+                    <span id="btnText">Send Message</span>
+                    <span id="btnLoading" class="loading" style="display: none;"></span>
+                </button>
+      </form>
+      <div id="successMessage" class="success-message">
+        Thank you for your message! We'll get back to you within 24 hours.
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Spineret</h4>
+        <p style="color: var(--text-secondary); margin-top: 1rem;">
+          Web design that captures customers and grows your business.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">Development</a></li>
+          <li><a href="#">SEO Optimization</a></li>
+          <li><a href="#">Monthly Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p style="color: var(--text-secondary);">
+          Email: hello@spineret.com<br>
+                    Phone: (555) 123-4567<br>
+                    Response time: Within 24 hours
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Spineret. All rights reserved. | Built with <a
+          href="https://huggingface.co/spaces/akhaliq/anycoder">anycoder</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe highlight cards
+        document.querySelectorAll('.highlight-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                });
+                
+                // Open clicked FAQ if it wasn't active
+                if (!isActive) {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+        // Contact Form Handler
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-block';
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Hide loading
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                
+                // Show success message
+                successMessage.classList.add('show');
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            }, 2000);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to spider webs
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const webs = document.querySelectorAll('.spider-web');
+            
+            webs.forEach((web, index) => {
+                const speed = index === 0 ? 0.5 : -0.5;
+                web.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Add hover effect to pricing cards
+        document.querySelectorAll('.pricing-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = this.classList.contains('premium') ? 'scale(1.05) translateY(-5px)' : 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = this.classList.contains('premium') ? 'scale(1.05)' : 'translateY(0)';
+            });
+        });
+
+        // Add typing effect to hero title
+        const heroTitle = document.querySelector('.hero h1');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < originalText.length) {
+                heroTitle.textContent += originalText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // Start typing effect when page loads
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 500);
+        });
+  </script>
+</body>
+
+</html>
