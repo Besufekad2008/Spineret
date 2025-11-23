@@ -1,0 +1,17 @@
+backend:
+  name: github
+  repo: Besufekad2008/Spineret
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home"
+        label: "Home Page"
+        file: "index.html"
+        fields:
+          - { label: "Main content", name: "body", widget: "text" }
